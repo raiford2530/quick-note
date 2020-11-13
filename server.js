@@ -20,12 +20,31 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(publicRoot, 'notes.html'));
 })
 
+const dbPath = path.join(__dirname, "db/db.json");
+
 //API ROUTES
 app.get('/api/notes', (req, res) => {
-    fs.readFile(path.join(__dirname, "db/db.json"), (err, data) => {
+    fs.readFile(dbPath, (err, data) => {
         res.json(JSON.parse(data));
     })
 })
+
+app.post('/api/notes', (req, res) => {
+    const note = req.body;
+
+    fs.readFile(dbPath, (err, data) => {
+        if(err) throw err;
+
+        const notes = JSON.parse(data);
+        notes.push(note);
+
+        fs.writeFile(dbPath, JSON.stringify(notes), "utf8", (err) => {
+            if(err) throw err;
+        })
+    })
+
+    res.json(note);
+})  
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicRoot, 'index.html'));
