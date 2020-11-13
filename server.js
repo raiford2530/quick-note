@@ -45,10 +45,32 @@ app.post('/api/notes', (req, res) => {
 
             res.json(note);
         })
-    })
-
-    
+    })   
 })  
+
+app.delete('/api/notes/:id', (req, res) => {
+    const noteId = parseInt(req.params.id);
+
+    fs.readFile(dbPath, (err, data) => {
+        if(err) throw err;
+
+        let notes = JSON.parse(data);
+        
+        const deleteIndex = notes.findIndex(note => note.id === noteId)
+
+        if(deleteIndex > -1){
+            notes.splice(deleteIndex, 1);
+
+            fs.writeFile(dbPath, JSON.stringify(notes), "utf8", (err) => {
+                if(err) throw err;
+    
+                res.sendStatus(204);
+            })
+        }else{
+            res.sendStatus(404);
+        }     
+    })   
+})
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicRoot, 'index.html'));
