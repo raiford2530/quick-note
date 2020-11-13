@@ -29,8 +29,10 @@ app.get('/api/notes', (req, res) => {
     })
 })
 
+let noteID = 1;
 app.post('/api/notes', (req, res) => {
-    const note = req.body;
+    let note = req.body;
+    note.id = noteID++;
 
     fs.readFile(dbPath, (err, data) => {
         if(err) throw err;
@@ -40,10 +42,12 @@ app.post('/api/notes', (req, res) => {
 
         fs.writeFile(dbPath, JSON.stringify(notes), "utf8", (err) => {
             if(err) throw err;
+
+            res.json(note);
         })
     })
 
-    res.json(note);
+    
 })  
 
 app.get('*', (req, res) => {
