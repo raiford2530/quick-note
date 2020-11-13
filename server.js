@@ -16,6 +16,10 @@ app.listen(PORT, () => {
 const publicRoot = path.join(__dirname, "public");
 
 //ROUTES
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(publicRoot, 'notes.html'));
+})
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicRoot, 'index.html'));
 })
