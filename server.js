@@ -15,9 +15,16 @@ app.listen(PORT, () => {
 
 const publicRoot = path.join(__dirname, "public");
 
-//ROUTES
+//VIEW ROUTES
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(publicRoot, 'notes.html'));
+})
+
+//API ROUTES
+app.get('/api/notes', (req, res) => {
+    fs.readFile(path.join(__dirname, "db/db.json"), (err, data) => {
+        res.json(JSON.parse(data));
+    })
 })
 
 app.get('*', (req, res) => {
