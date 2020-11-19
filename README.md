@@ -3,6 +3,8 @@
 ## Description  
 Note Taker is a simple web application for users to create and save notes and then delete them when the user no longer needs them. It was created to help people quickly be able to create notes without having to go the traditional route with pen and paper. The app was created using Nodes.js and Inquirer.
 
+[Note Taker Demo](https://mighty-earth-52877.herokuapp.com)
+
 ![Screenshot #1](./screenshots/screenshot1.png)
 
 ![Screenshot #2](./screenshots/screenshot2.png)
